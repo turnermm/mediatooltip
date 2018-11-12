@@ -1,7 +1,7 @@
         
     
     jQuery( document ).ready(function() {            
-    jQuery("img.media" ).each (function( index ) {  
+    jQuery("img.media,img.mediacenter,img.mediaright" ).each (function( index ) {  
           var url  = jQuery( this ).parent().attr('href');      
           var camera = jQuery( this ).parent().attr('rel');      
           var date;
