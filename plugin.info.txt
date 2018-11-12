@@ -1,0 +1,9 @@
+base mediatooltip
+author Myron Turner
+email turnermm02@shaw.ca
+date 2018-11-12
+name mediatooltip
+desc Creates enhanced tooltips and file names for media
+url http://www.dokuwiki.org/plugin:mediatooltip
+
+
