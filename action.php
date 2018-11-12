@@ -142,17 +142,22 @@ function _insert_exif(Doku_Event $event) {
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
     
-               list($_pre,$_img) = explode('=',$matches[0]);             
-              $meta = new JpegMeta(mediaFN($_img));   
+               list($_pre,$_img) = explode('=',$matches[0]);   
               
+              $meta = new JpegMeta(mediaFN($_img));             
              $camera = $meta->getCamera();       
              $camera = trim($camera);
+             $dates = $meta->getDates();
+             $time_str = $dates['TimeStr'];  
+
 			 $camera = preg_replace("/\b(\w+)(?:\s+\\1\b)/i", "$1", $camera);
              $speed =  $meta->_info['exif']['ExposureTime']['val'];//getShutterSpeed();
 			 $fstop =  $meta->_info['exif']['FNumber']['val'];
 			 $camera .= "&nbsp;&nbsp;&nbsp;F:$fstop @ $speed sec.";
+             $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str";
+    //         msg($camera);
              $matches[0] =  $matches[0] . '"  rel ="' . $camera ;
-		
+	
              return $matches [0];
         },
         $event->data

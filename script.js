@@ -4,18 +4,29 @@
     jQuery("img.media" ).each (function( index ) {  
           var url  = jQuery( this ).parent().attr('href');      
           var camera = jQuery( this ).parent().attr('rel');      
-          if(url.match(/\d\d\d\d-\d\d-\d\d/)) {              
+          var date;
+                
+          if(camera) {              
               var title = jQuery( this ).parent().attr('title');        
               var tarray  = title.match(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/);
- 
-              if(!tarray) {                            
-                  return;
+              var ar = camera.split(/tm=/);            
+             camera = camera.replace(/tm=.*?$/,"");
+
+              if(tarray) {                            
+                  date  = tarray[1].replace(/[.\-_]/g,':');
+                  date = ' <i>(' + date + ') </i>';         
+                  title = title.replace(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/, date);     
               }
-              var date = tarray[1].replace(/[.\-_]/g,':');
-              date = ' <i>(' + date + ') </i>';         
+              else {
+                        date = ar[1] ;
+                        ar = date.split(/\s/);
+                        date = ar[0] + '&nbsp;<i>(' + ar[1] + ') </i>';         
+                        title += "&nbsp;&nbsp;&nbsp;&nbsp;" + date;
+              }
             
-             title = title.replace(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/, date);     
-             if(camera)  title += '<br>' + camera;             	      
+            
+             
+              title += '<br>' + camera;             	      
               jQuery( this ).attr('title', title);     
           
               jQuery( this ).tooltip({
