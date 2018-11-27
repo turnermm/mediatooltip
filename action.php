@@ -153,7 +153,9 @@ function _insert_exif(Doku_Event $event) {
 			 $camera = preg_replace("/\b(\w+)(?:\s+\\1\b)/i", "$1", $camera);
              $speed =  $meta->_info['exif']['ExposureTime']['val'];//getShutterSpeed();
 			 $fstop =  $meta->_info['exif']['FNumber']['val'];
-			 $camera .= "&nbsp;&nbsp;&nbsp;F:$fstop @ $speed sec.";
+             if($fstop) {
+			     $camera .= "&nbsp;&nbsp;&nbsp;F:$fstop @ $speed sec.";             
+             }
              $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str";
     //         msg($camera);
              $matches[0] =  $matches[0] . '"  rel ="' . $camera ;
