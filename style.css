@@ -13,7 +13,13 @@ div.ui-tooltip {
     max-width: 600px !important;
     font-size: 10pt !important;
 }
-
+div.annotation {
+	border: 2px solid black;
+	width: 600px;
+	height: 80px;
+	overflow:auto;
+	padding: 4px;
+}
 .mtt_tooltip {
   position: relative;
   display: inline-block;

@@ -29,7 +29,7 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
      */
 
     function getPType(){      
-       return 'normal';
+       return 'block';
     }
 
     /**
@@ -66,7 +66,7 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
         switch($state) {    
           case DOKU_LEXER_ENTER :
 		   $match = str_replace(':','_',substr($match,2,-1));	
-		   msg($match);  
+		  // msg($match);  
 			   return array($state, $match);
           case DOKU_LEXER_UNMATCHED :  
             //  msg(htmlentities($match));		  
@@ -74,7 +74,7 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
           case DOKU_LEXER_EXIT :   return array($state, '');                
           case DOKU_LEXER_SPECIAL: 			  
 		      $inner = substr($match,6,-7);
-			  msg($inner);	
+			 // msg($inner);	
 			  return array($state, $inner); 
        }
          return array($state, "" );
@@ -90,16 +90,16 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
             list($state, $xhtml) = $data;
             switch ($state) {
                 case DOKU_LEXER_ENTER : 
-				    $tip = '<div class="'. $xhtml . '">';
-				    $renderer->doc .= htmlentities($tip);
+				    $tip = '<div class="annotation '. $xhtml . '">';
+				    $renderer->doc .= $tip;
 				break;                                                        
                 case DOKU_LEXER_UNMATCHED : 
 				 // msg(htmlentities($xhtml));
                 $renderer->doc .= htmlentities($xhtml); break;
                 case DOKU_LEXER_EXIT : 
-				    $renderer->doc .= htmlentities("</div>"); break; 
+				    $renderer->doc .= "</div>"; break; 
 				case DOKU_LEXER_SPECIAL:
-				    msg(htmlentities($xhtml));
+				  //  msg(htmlentities($xhtml));
 				    $renderer->doc .= "";
 				     break;	
 				
