@@ -13,7 +13,7 @@ div.ui-tooltip {
     max-width: 600px !important;
     font-size: 10pt !important;
 }
-div.annotation {
+.annotation {
 	border: 2px solid black;
 	width: 600px;
 	height: 80px;
@@ -25,27 +25,4 @@ span.anno {
 	text-decoration-line: underline;
 	text-decoration-style: dotted;
 	text-decoration-color: black;
-}
-.mtt_tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.mtt_tooltip .mtt_tooltiptext {
-  visibility: hidden;
-  width: 250px;
-  background-color: black;
-  color: #fff;  
-  padding:12px;
-  border-radius: 6px;  
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  bottom: 100%;
-  margin-left: -100px;
-}
-
-.mtt_tooltip:hover .mtt_tooltiptext {
-  visibility: visible;
 }
