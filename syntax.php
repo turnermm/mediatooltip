@@ -94,6 +94,7 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
 				break;                                                        
                 case DOKU_LEXER_UNMATCHED : 
 				 // msg(htmlentities($xhtml));
+                $renderer->doc .= '<span id="anno_close"><span class="anno_exit">close</span> </span>';
                 $renderer->doc .= htmlentities($xhtml); break;
                 case DOKU_LEXER_EXIT : 
 				    $renderer->doc .= "</span>"; break; 
