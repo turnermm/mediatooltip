@@ -19,6 +19,12 @@ div.annotation {
 	height: 80px;
 	overflow:auto;
 	padding: 4px;
+	display: none;
+}
+span.anno {
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: black;
 }
 .mtt_tooltip {
   position: relative;

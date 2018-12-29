@@ -29,7 +29,7 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
      */
 
     function getPType(){      
-       return 'block';
+      // return 'block';
     }
 
     /**
@@ -66,7 +66,6 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
         switch($state) {    
           case DOKU_LEXER_ENTER :
 		   $match = str_replace(':','_',substr($match,2,-1));	
-		  // msg($match);  
 			   return array($state, $match);
           case DOKU_LEXER_UNMATCHED :  
             //  msg(htmlentities($match));		  
@@ -97,11 +96,12 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
 				 // msg(htmlentities($xhtml));
                 $renderer->doc .= htmlentities($xhtml); break;
                 case DOKU_LEXER_EXIT : 
-				    $renderer->doc .= "</div>"; break; 
+				    $renderer->doc .= "</div></p>"; break; 
 				case DOKU_LEXER_SPECIAL:
 				  //  msg(htmlentities($xhtml));
-				    $renderer->doc .= "";
-				     break;	
+					list($which,$text)= explode('>',$xhtml); 
+                    $title = 'anno_' .$which;
+				    $renderer->doc .= '<span class="anno" title="' .$title.'">' .htmlentities($text).'</span>';				     break;	
 				
         }
            return true;
