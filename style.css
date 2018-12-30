@@ -40,7 +40,12 @@ span.anno_exit {
 }
 
 span.anno {
+    cursor: help;
 	text-decoration-line: underline;
 	text-decoration-style: dotted;
 	text-decoration-color: black;
+    border-bottom-color: black;
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    
 }
