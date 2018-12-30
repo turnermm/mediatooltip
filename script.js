@@ -45,6 +45,7 @@
                          content: title
         });        
     }); 
+   jQuery( "span.annotation" ).draggable();
    jQuery("span.anno") .mouseover(function() {
        var title = jQuery( this ).attr('title');     
        jQuery("span." + title).css('display','inline-block');           

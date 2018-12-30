@@ -89,7 +89,7 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
             list($state, $xhtml) = $data;
             switch ($state) {
                 case DOKU_LEXER_ENTER : 
-				    $tip = '<span class="annotation '. $xhtml . '">';
+				    $tip = '<span class="annotation ui-widget-content '. $xhtml . '">';
 				    $renderer->doc .= $tip;
 				break;                                                        
                 case DOKU_LEXER_UNMATCHED : 

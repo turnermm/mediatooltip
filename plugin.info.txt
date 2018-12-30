@@ -1,9 +1,9 @@
-base mediatooltip
+base annotate
 author Myron Turner
 email turnermm02@shaw.ca
-date 2018-11-27
-name mediatooltip
-desc Creates enhanced tooltips and file names for media
-url http://www.dokuwiki.org/plugin:mediatooltip
+date 2018-12-29
+name annotate
+desc Creates boxes, for extended annotations, that open and close in place
+url http://www.dokuwiki.org/plugin:annotate
 
 
