@@ -29,7 +29,7 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
      */
 
     function getPType(){      
-      // return 'block';
+      return 'block';
     }
 
     /**
@@ -95,7 +95,16 @@ class syntax_plugin_mediatooltip extends DokuWiki_Syntax_Plugin {
                 case DOKU_LEXER_UNMATCHED : 
 				 // msg(htmlentities($xhtml));
                 $renderer->doc .= '<span id="anno_close"><span class="anno_exit">close</span> </span>';
-                $renderer->doc .= htmlentities($xhtml); break;
+       		    $xhtml = trim($xhtml);
+                msg($xhtml);
+                 if(preg_match('/^\{\{([\w\:]+)\}\}$/',$xhtml,$matches)) {					
+				  	   $html = p_wiki_xhtml($matches[1]);                        
+			        }
+			    else {
+				       //$html = html_secedit(p_render('xhtml',p_get_instructions($xhtml),$info),$secedit);				 
+                      $html =  htmlentities($xhtml); 
+				} 
+                $renderer->doc .= $html;  break;
                 case DOKU_LEXER_EXIT : 
 				    $renderer->doc .= "</span>"; break; 
 				case DOKU_LEXER_SPECIAL:
