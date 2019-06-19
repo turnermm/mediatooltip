@@ -5,7 +5,7 @@
           var url  = jQuery( this ).parent().attr('href');      
           var camera = jQuery( this ).parent().attr('rel');      
           var date;
-                
+        
           if(camera) {              
               var title = jQuery( this ).parent().attr('title');        
               var tarray  = title.match(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/);
@@ -19,14 +19,14 @@
               }
               else {
                         date = ar[1] ;
-                        ar = date.split(/\s/);
-                        date = ar[0] + '&nbsp;<i>(' + ar[1] + ') </i>';         
-                        title += "&nbsp;&nbsp;&nbsp;&nbsp;" + date;
+                        if(date) {
+                            ar = date.split(/\s/);
+                            date = ar[0] + '&nbsp;<i>(' + ar[1] + ') </i>';                                                  
+                            title += "&nbsp;&nbsp;&nbsp;&nbsp;" + date;
+                        }
               }
-            
-            
-             
-              title += '<br>' + camera;             	      
+              if(camera != 'noopener')  
+                  title += '<br>' + camera;       
               jQuery( this ).attr('title', title);     
           
               jQuery( this ).tooltip({
