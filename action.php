@@ -156,9 +156,11 @@ function _insert_exif(Doku_Event $event) {
              if($fstop) {
 			     $camera .= "&nbsp;&nbsp;&nbsp;F:$fstop @ $speed sec.";             
              }
-             $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str";
-    //         msg($camera);
+             $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str";    //         msg($camera); 
+         
              $matches[0] =  $matches[0] . '"  rel ="' . $camera ;
+             $copy = $meta->_info['exif']['Copyright'];                      
+             $matches[0] .= trim($copy);
 	
              return $matches [0];
         },

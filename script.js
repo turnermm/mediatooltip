@@ -4,6 +4,7 @@
     jQuery("img.media,img.mediacenter,img.mediaright" ).each (function( index ) {  
           var url  = jQuery( this ).parent().attr('href');      
           var camera = jQuery( this ).parent().attr('rel');      
+          var copy = camera.match(/Copyright.*$/);                 
           var date;
         
           if(camera) {              
@@ -26,7 +27,8 @@
                         }
               }
               if(camera != 'noopener')  
-                  title += '<br>' + camera;       
+                  title += '<br />' + camera;    
+              if(copy) title += '<br />' + copy;   
               jQuery( this ).attr('title', title);     
           
               jQuery( this ).tooltip({
