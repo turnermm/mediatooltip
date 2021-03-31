@@ -14,7 +14,7 @@
              camera = camera.replace(/tm=.*?$/,"");
 
               if(tarray) {                            
-                  date  = tarray[1].replace(/[.\-_]/g,':');
+                  date  = tarray[1].replace(/[.\-_]\(\)/g,':');                 
                   date = ' <i>(' + date + ') </i>';         
                   title = title.replace(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/, date);     
               }
@@ -22,10 +22,11 @@
                         date = ar[1] ;
                         if(date) {
                             ar = date.split(/\s/);
-                            date = ar[0] + '&nbsp;<i>(' + ar[1] + ') </i>';                                                  
+                            date = ar[0] + '(<i>' + ar[1] + '</i>)';                                                 
                             title += "&nbsp;&nbsp;&nbsp;&nbsp;" + date;
                         }
               }
+         
               if(camera != 'noopener')  
                   title += '<br />' + camera;    
               if(copy) title += '<br />' + copy;   

@@ -144,7 +144,6 @@ function _insert_exif(Doku_Event $event) {
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
              $meta = new JpegMeta(mediaFN($_img));    
     
-              
              $camera = $meta->getCamera();       
              $camera = trim($camera);
            
@@ -166,8 +165,7 @@ function _insert_exif(Doku_Event $event) {
              } 
              $matches[0] .= '"  rel ="' . $camera ;
              $copy = $meta->_info['exif']['Copyright'];                      
-             $matches[0] .= trim($copy);
-	
+             if(!empty($copy))  $matches[0] .= '<br />' .trim($copy);
              return $matches [0];
         },
         $event->data
