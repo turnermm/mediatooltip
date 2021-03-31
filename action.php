@@ -141,12 +141,13 @@ function _insert_exif(Doku_Event $event) {
     $event->data = preg_replace_callback(
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
+             list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
+             $meta = new JpegMeta(mediaFN($_img));    
     
-               list($_pre,$_img) = explode('=',$matches[0]);   
               
-              $meta = new JpegMeta(mediaFN($_img));             
              $camera = $meta->getCamera();       
              $camera = trim($camera);
+           
              $dates = $meta->getDates();
              $time_str = $dates['TimeStr'];  
 
@@ -157,8 +158,13 @@ function _insert_exif(Doku_Event $event) {
 			     $camera .= "&nbsp;&nbsp;&nbsp;F:$fstop @ $speed sec.";             
              }
              $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str";    //         msg($camera); 
-         
-             $matches[0] =  $matches[0] . '"  rel ="' . $camera ;
+             $artist =  $meta->_info['exif']['Artist'];
+             $_title = $_title = $meta->getTitle();
+             if(!empty($artist)) {
+                 $matches[0] .=  "&nbsp;&nbsp;&nbsp;<br />" . trim($artist);
+                 if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
+             } 
+             $matches[0] .= '"  rel ="' . $camera ;
              $copy = $meta->_info['exif']['Copyright'];                      
              $matches[0] .= trim($copy);
 	
