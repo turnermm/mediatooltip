@@ -23,7 +23,7 @@
                         if(date) {
                             ar = date.split(/\s/);
                             date = ar[0] + '(<i>' + ar[1] + '</i>)';                                                 
-                            title += "&nbsp;&nbsp;&nbsp;&nbsp;" + date;
+                            title += "<br />" + date;
                         }
               }
          
