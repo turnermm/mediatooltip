@@ -4,8 +4,8 @@
     jQuery("img.media,img.mediacenter,img.mediaright" ).each (function( index ) {  
           var url  = jQuery( this ).parent().attr('href');      
           var camera = jQuery( this ).parent().attr('rel');      
-          var copy = camera.match(/Copyright.*$/);                 
-          var date;
+          var copy = jQuery( this ).parent().attr('license');           
+          var date, output;
         
           if(camera) {              
               var title = jQuery( this ).parent().attr('title');        
@@ -29,11 +29,12 @@
          
               if(camera != 'noopener')  
                   title += '<br />' + camera;    
-              if(copy) title += '<br />' + copy;   
+              output =  copy ? title + '<br />' + copy : title;               
               jQuery( this ).attr('title', title);     
           
               jQuery( this ).tooltip({
-                     content: title
+                      
+                     content: output //title + "<br />" + copy
              });      
            
          //      jQuery(this).tooltip( "option", "position", { my: "left+15 center", at: "right center" } );
