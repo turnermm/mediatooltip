@@ -165,7 +165,7 @@ function _insert_exif(Doku_Event $event) {
              } 
              $matches[0] .= '"  rel ="' . $camera ;
              $copy = $meta->_info['exif']['Copyright'];                      
-             if(!empty($copy))  $matches[0] .= '<br />' .trim($copy);
+             if(!empty($copy))  $matches[0] .= '" license="'. trim($copy) ;
              return $matches [0];
         },
         $event->data
