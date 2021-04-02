@@ -3,8 +3,9 @@
     jQuery( document ).ready(function() {            
     jQuery("img.media,img.mediacenter,img.mediaright" ).each (function( index ) {  
           var url  = jQuery( this ).parent().attr('href');      
-          var camera = jQuery( this ).parent().attr('rel');      
+          var camera = jQuery( this ).parent().attr('data-rel');      
           var copy = jQuery( this ).parent().attr('license');           
+          var caption = jQuery( this ).parent().attr('data-caption');            
           var date, output;
         
           if(camera) {              
@@ -26,18 +27,17 @@
                             title += "<br />" + date;
                         }
               }
-         
               if(camera != 'noopener')  
                   title += '<br />' + camera;    
-              output =  copy ? title + '<br />' + copy : title;               
-              jQuery( this ).attr('title', title);     
+              output =  caption ? title + '<br />' + caption: title;
+              output =  copy ? output + '<br />' + copy : output; 
+                                
+              //jQuery( this ).attr('title', title);    
           
               jQuery( this ).tooltip({
                       
-                     content: output //title + "<br />" + copy
+                     content: output 
              });      
-           
-         //      jQuery(this).tooltip( "option", "position", { my: "left+15 center", at: "right center" } );
           }       
           else jQuery( this ).tooltip();
    });
