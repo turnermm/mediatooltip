@@ -156,7 +156,8 @@ function _insert_exif(Doku_Event $event) {
              if($fstop) {
 			     $camera .= "&nbsp;&nbsp;F:$fstop @ $speed sec.";             
              }
-             $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str";    //         msg($camera); 
+             $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str"; 
+             
              $artist =  $meta->_info['exif']['Artist'];
              $_title = $meta->getTitle();
              if(!empty($artist)) {
@@ -166,23 +167,26 @@ function _insert_exif(Doku_Event $event) {
           
              $caption =  $meta->getField(array('IPTC.Caption'));
              if(!empty($caption) && $caption != $_title) {                
-                 $caption = htmlentities($caption,ENT_DISALLOWED|ENT_QUOTES);
-                 $caption = preg_replace("/\s+/",'&nbsp;', $caption);
-                 $matches[0] .= '" data-caption ="' .   $caption ;       
+                 $matches[0] .= '" data-caption ="' . $this->format_attribute($caption);       
              }
-             $matches[0] .= '"  data-rel ="' . htmlentities($camera ,ENT_DISALLOWED|ENT_QUOTES);   
-           //   msg($matches[0]);
+             
+             $matches[0] .= '"  data-rel ="' .  $this->format_attribute($camera);        
              $copy = $meta->_info['exif']['Copyright'];                      
              if(!empty($copy)) {
-                 $matches[0] .= '" license="' . htmlentities(trim($copy)) ;
+                 $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }
-            //  msg( $matches[0]);
              return $matches [0];
         },
         $event->data
     );
 }
 
+function format_attribute($value) {
+    $value = trim($value);
+    $value = htmlentities($value,ENT_DISALLOWED|ENT_QUOTES);
+    $value = preg_replace('/\s+/','&nbsp;',$value);
+    return $value;
+}    
 
 function write_debug($data) {
    return;
