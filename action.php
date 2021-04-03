@@ -137,10 +137,14 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
  } 
  
 function _insert_exif(Doku_Event $event) { 
-    
+   global $meditooltip_fields;   
+   $meditooltip_fields = $this->getConf('fields');
+  //if(empty($meditooltip_fields)) return;
     $event->data = preg_replace_callback(
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
+             global $meditooltip_fields;
+           //  msg($meditooltip_fields,1);
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
              $meta = new JpegMeta(mediaFN($_img));    
     
