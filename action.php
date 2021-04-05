@@ -150,12 +150,12 @@ function _insert_exif(Doku_Event $event) {
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
            //msg($matches[0]);
-            foreach($this->$toolTipOptions as $tip) {
-             //  $tip .'=' .print_r($this->fields[$tip],1);
-            }                
+             
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
              $meta = new JpegMeta(mediaFN($_img));    
-    
+             foreach($this->$toolTipOptions as $tip) {              
+                 msg($tip . ' = ' . $this->getFieldValue($tip,$meta),2);
+              }   
              $camera = $meta->getCamera();       
              $camera = trim($camera);
            
@@ -169,8 +169,10 @@ function _insert_exif(Doku_Event $event) {
 			     $camera .= "&nbsp;&nbsp;F:$fstop @ $speed sec.";             
              }
              $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str"; 
+          //   msg($this->getFieldValue('Date',$meta));
+           //  $artist =  $meta->_info['exif']['Artist'];
+              $artist = $this->getFieldValue('Artist',$meta);
              
-             $artist =  $meta->_info['exif']['Artist'];
              $_title = $meta->getTitle();
              if(!empty($artist)) {
                  $matches[0] .=  "&nbsp;<br />" . trim($artist);
@@ -199,6 +201,29 @@ function format_attribute($value) {
     $value = preg_replace('/\s+/','&nbsp;',$value);
     return $value;
 }    
+
+function getFieldValue($field,$meta) {  
+    $ar = $this->fields[$field];    
+    foreach($ar AS $el) 
+    {     
+       // msg($el,1);
+       if(is_array($el)) {
+         while(!empty($el)) {   
+             $inner = array_shift($el);  
+             msg($inner,2);             
+             $value = $meta->getField($inner);
+             if($value) return $value;
+         }
+       }
+       $value =  $meta->getField($el);
+       
+       if($value) {
+         return $value;
+      }
+     }
+  
+    return false;
+}
 
 function init_fields() {    
     $this->fields = array(
