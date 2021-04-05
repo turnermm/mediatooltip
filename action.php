@@ -143,14 +143,16 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
  } 
  
 function _insert_exif(Doku_Event $event) { 
-   global $meditooltip_fields;   
-   $meditooltip_fields = $this->getConf('fields');
-  //if(empty($meditooltip_fields)) return;
+
+ //  msg(print_r($this->$toolTipOptions,1),1); 
+    if(empty($this->$toolTipOptions)) return;
     $event->data = preg_replace_callback(
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
-             global $meditooltip_fields;
-           //  msg($meditooltip_fields,1);
+           //msg($matches[0]);
+            foreach($this->$toolTipOptions as $tip) {
+             //  $tip .'=' .print_r($this->fields[$tip],1);
+            }                
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
              $meta = new JpegMeta(mediaFN($_img));    
     
@@ -197,6 +199,73 @@ function format_attribute($value) {
     $value = preg_replace('/\s+/','&nbsp;',$value);
     return $value;
 }    
+
+function init_fields() {    
+    $this->fields = array(
+    'Title' => array('Iptc.Headline',
+                'img_title',
+                'text'),
+
+    'Date' => array('',
+                'img_date',
+                'date',
+                array('Date.EarliestTime')),
+
+    'File' => array('',
+                'img_fname',
+                'text',
+                array('File.Name')),
+
+    'Caption' => array('Iptc.Caption',
+                'img_caption',
+                'textarea',
+                array('Exif.UserComment',
+                      'Exif.TIFFImageDescription',
+                      'Exif.TIFFUserComment')),
+
+   'Artist' => array('Iptc.Byline',
+                'img_artist',
+                'text',
+                array('Exif.TIFFArtist',
+                      'Exif.Artist',
+                      'Iptc.Credit')),
+
+    'Copyright' => array('Iptc.CopyrightNotice',
+                'img_copyr',
+                'text',
+                array('Exif.TIFFCopyright',
+                      'Exif.Copyright')),
+                      
+    'FileSize'  => array('',
+                'img_fsize',
+                'text',
+                 array('File.NiceSize')),
+
+    'Width'=> array('',
+                'img_width',
+                'text',
+                array('File.Width')),
+
+    'Height' => array('',
+                'img_height',
+                'text',
+                array('File.Height')),
+
+    'Camera' => array('',
+                'img_camera',
+                'text',
+                array('Simple.Camera')),
+ 
+     );
+/*
+Exif.ApertureValue
+Exif.MaxApertureValue
+Exif.ShutterSpeedValue
+Exif.XResolution
+Exif.YResolution
+*/
+}    
+
 
 function write_debug($data) {
    return;
