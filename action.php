@@ -4,12 +4,18 @@ if(!defined('DOKU_INC')) die();
 require_once(DOKU_PLUGIN.'action.php');
  
 class action_plugin_mediatooltip extends DokuWiki_Action_Plugin { 
- 
+   private $fields;
+   private $toolTipOptions;
  function register(Doku_Event_Handler $controller) {       
        $controller->register_hook('MEDIA_UPLOAD_FINISH', 'BEFORE', $this, '_media_finish');
        $controller->register_hook('TPL_CONTENT_DISPLAY', 'BEFORE', $this, '_insert_exif'); 
  }
 
+   function __construct() {
+      $this->init_fields();
+      $this->$toolTipOptions = explode(',',$this->getConf('fields'));
+      //if(!empty($this->$toolTipOptions)) $this->$toolTipOptions = explode($this->$toolTipOptions);
+   }
 
  /*
  Array
