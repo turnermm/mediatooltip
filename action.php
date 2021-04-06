@@ -169,17 +169,15 @@ function _insert_exif(Doku_Event $event) {
 			     $camera .= "&nbsp;&nbsp;F:$fstop @ $speed sec.";             
              }
              $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str"; 
-          //   msg($this->getFieldValue('Date',$meta));
-           //  $artist =  $meta->_info['exif']['Artist'];
+           
               $artist = $this->getFieldValue('Artist',$meta);
-            
              $_title = $meta->getTitle();
              if(!empty($artist)) {
                  $matches[0] .=  "&nbsp;<br />" . trim($artist);
                  if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
              }
           
-             $caption =  $meta->getField(array('IPTC.Caption'));
+             $caption =  $this->getFieldValue('Caption',$meta);
              if(!empty($caption) && $caption != $_title) {                
                  $matches[0] .= '" data-caption ="' . $this->format_attribute($caption);       
              }
@@ -189,10 +187,12 @@ function _insert_exif(Doku_Event $event) {
              if(!empty($copy)) {
                  $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }
+             $matches[0] = preg_replace("/data-/","\n    data-",$matches[0]);            
              return $matches [0];
         },
         $event->data
     );
+       $event->data = str_replace('><img',">\n    <img",$event->data);
 }
 
 function format_attribute($value) {
@@ -206,11 +206,9 @@ function getFieldValue($field,$meta) {
     $ar = $this->fields[$field];    
     foreach($ar AS $el) 
     {     
-       // msg($el,1);
        if(is_array($el)) {
          while(!empty($el)) {   
              $inner = array_shift($el);  
-            // msg($inner,2);             
              $value = $meta->getField($inner);
              if($value) return $value;
          }

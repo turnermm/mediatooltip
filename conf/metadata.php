@@ -1,6 +1,6 @@
 <?php
-$meta['fields'] = array('multicheckbox','_choices' => array('File','Camera','Exposure','Date','Artist',
-                                                            'Copyright','Caption','Title'));
+$meta['fields'] = array('multicheckbox','_choices' => array('Camera','Exposure','Date','Artist',
+                                                            'Copyright','Caption','ImgSize','FileSize'));
 $meta['groups'] = array('string');
 $meta['enable_userid'] = array('onoff');
 $meta['enable_real'] = array('onoff');
