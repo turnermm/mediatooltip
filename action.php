@@ -154,15 +154,15 @@ function _insert_exif(Doku_Event $event) {
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
              $meta = new JpegMeta(mediaFN($_img));    
              foreach($this->$toolTipOptions as $tip) {              
-                 msg($tip . ' = ' . $this->getFieldValue($tip,$meta),2);
+                // msg($tip . ' = ' . $this->getFieldValue($tip,$meta),2);
               }   
              $camera = $meta->getCamera();       
              $camera = trim($camera);
            
              $dates = $meta->getDates();
              $time_str = $dates['TimeStr'];  
-
-			 $camera = preg_replace("/\b(\w+)(?:\s+\\1\b)/i", "$1", $camera);
+                                      //remove sometimes duplicate camera name
+             $camera = preg_replace("/\b(\w+)(?:\s+\\1\b)/i", "$1", $camera);
              $speed =  $meta->_info['exif']['ExposureTime']['val'];//getShutterSpeed();
 			 $fstop =  $meta->_info['exif']['FNumber']['val'];
              if($fstop) {
@@ -172,12 +172,12 @@ function _insert_exif(Doku_Event $event) {
           //   msg($this->getFieldValue('Date',$meta));
            //  $artist =  $meta->_info['exif']['Artist'];
               $artist = $this->getFieldValue('Artist',$meta);
-             
+            
              $_title = $meta->getTitle();
              if(!empty($artist)) {
                  $matches[0] .=  "&nbsp;<br />" . trim($artist);
                  if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
-             } 
+             }
           
              $caption =  $meta->getField(array('IPTC.Caption'));
              if(!empty($caption) && $caption != $_title) {                
@@ -185,7 +185,7 @@ function _insert_exif(Doku_Event $event) {
              }
              
              $matches[0] .= '"  data-rel ="' .  $this->format_attribute($camera);        
-             $copy = $meta->_info['exif']['Copyright'];                      
+             $copy = $meta->_info['exif']['Copyright']; 
              if(!empty($copy)) {
                  $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }
@@ -210,7 +210,7 @@ function getFieldValue($field,$meta) {
        if(is_array($el)) {
          while(!empty($el)) {   
              $inner = array_shift($el);  
-             msg($inner,2);             
+            // msg($inner,2);             
              $value = $meta->getField($inner);
              if($value) return $value;
          }
