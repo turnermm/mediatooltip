@@ -155,7 +155,7 @@ function _insert_exif(Doku_Event $event) {
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
 
              $meta = new JpegMeta(mediaFN($_img));    
-                        /* if filename is omitted, then an artist & tile is required */
+                        /* if filename is omitted, then an artist and/or title is required */
              if(!in_array('File',$this->toolTipOptions) && $this->getFieldValue('Artist',$meta))
                {
                  $matches[0] = 'title="';
@@ -181,11 +181,16 @@ function _insert_exif(Doku_Event $event) {
            
               $artist = $this->getFieldValue('Artist',$meta);
              $_title = $meta->getTitle();
-             if(!empty($artist)) {
+             if(!empty($artist) && !empty($_title)) {             
                  $matches[0] .=  "&nbsp;$BR" . trim($artist);
                  if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
              }
-          
+             else if(!empty($artist)) {
+                 $matches[0] .=  $artist;
+             }
+             else if(!empty($_title)) {
+                 $matches[0] .=  $_title;
+             }
              $caption =  $this->getFieldValue('Caption',$meta);
              if(!empty($caption) && $caption != $_title) {                
                  $matches[0] .= '" data-caption ="' . $this->format_attribute($caption);       
