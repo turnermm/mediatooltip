@@ -59,7 +59,6 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
     
     $ow = $INPUT->str('ow');   
     if(!empty($camera) &&  file_exists($path) && $ow == 'false') {
-         msg("$file_name exists");            
          $event->preventDefault();
     }
      $event->data[1] = $path;
@@ -144,7 +143,6 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
  
 function _insert_exif(Doku_Event $event) { 
 
-   // msg(print_r($this->toolTipOptions,1),2); 
     if(empty($this->toolTipOptions)) return;
   
     $event->data = preg_replace_callback(
@@ -156,7 +154,8 @@ function _insert_exif(Doku_Event $event) {
 
              $meta = new JpegMeta(mediaFN($_img));    
                         /* if filename is omitted, then an artist and/or title is required */
-             if(!in_array('File',$this->toolTipOptions) && $this->getFieldValue('Artist',$meta))
+              $useFileName = in_array('File',$this->toolTipOptions);
+              if(!$useFileName && $this->getFieldValue('Artist',$meta)) 
                {
                  $matches[0] = 'title="';
                  $BR = "";
@@ -180,7 +179,7 @@ function _insert_exif(Doku_Event $event) {
              $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str"; 
            
               $artist = $this->getFieldValue('Artist',$meta);
-             $_title = $meta->getTitle();
+             $_title = $meta->getTitle();  //msg($_title);           
              if(!empty($artist) && !empty($_title)) {             
                  $matches[0] .=  "&nbsp;$BR" . trim($artist);
                  if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
@@ -188,7 +187,7 @@ function _insert_exif(Doku_Event $event) {
              else if(!empty($artist)) {
                  $matches[0] .=  $artist;
              }
-             else if(!empty($_title)) {
+             elseif(!$useFileName && !empty($_title)) {
                  $matches[0] .=  $_title;
              }
              $caption =  $this->getFieldValue('Caption',$meta);
