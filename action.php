@@ -13,7 +13,7 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
 
    function __construct() {
       $this->init_fields();
-      $this->$toolTipOptions = explode(',',$this->getConf('fields'));
+      $this->toolTipOptions = explode(',',$this->getConf('fields'));
       //if(!empty($this->$toolTipOptions)) $this->$toolTipOptions = explode($this->$toolTipOptions);
    }
 
@@ -144,16 +144,25 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
  
 function _insert_exif(Doku_Event $event) { 
 
- //  msg(print_r($this->$toolTipOptions,1),1); 
-    if(empty($this->$toolTipOptions)) return;
+   // msg(print_r($this->toolTipOptions,1),2); 
+    if(empty($this->toolTipOptions)) return;
+  
     $event->data = preg_replace_callback(
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
            //msg($matches[0]);
              
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
+
              $meta = new JpegMeta(mediaFN($_img));    
-             foreach($this->$toolTipOptions as $tip) {              
+                        /* if filename is omitted, then an artist & tile is required */
+             if(!in_array('File',$this->toolTipOptions) && $this->getFieldValue('Artist',$meta))
+               {
+                 $matches[0] = 'title="';
+                 $BR = "";
+              } 
+              else $BR = '<br />';
+             foreach($this->toolTipOptions as $tip) {              
                 // msg($tip . ' = ' . $this->getFieldValue($tip,$meta),2);
               }   
              $camera = $meta->getCamera();       
@@ -173,7 +182,7 @@ function _insert_exif(Doku_Event $event) {
               $artist = $this->getFieldValue('Artist',$meta);
              $_title = $meta->getTitle();
              if(!empty($artist)) {
-                 $matches[0] .=  "&nbsp;<br />" . trim($artist);
+                 $matches[0] .=  "&nbsp;$BR" . trim($artist);
                  if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
              }
           
@@ -188,6 +197,7 @@ function _insert_exif(Doku_Event $event) {
                  $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }
              $matches[0] = preg_replace("/data-/","\n    data-",$matches[0]);            
+           //  msg($matches[0],1);
              return $matches [0];
         },
         $event->data
