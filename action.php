@@ -160,23 +160,30 @@ function _insert_exif(Doku_Event $event) {
                  $matches[0] = 'title="';
                  $BR = "";
               } 
-              else $BR = '<br />';
-             foreach($this->toolTipOptions as $tip) {              
-                // msg($tip . ' = ' . $this->getFieldValue($tip,$meta),2);
-              }   
+            else $BR = '<br>';
+            if(in_array('Camera', $this->toolTipOptions)) {   
              $camera = $meta->getCamera();       
              $camera = trim($camera);
+            }
+            else $camera = "";
            
+            if(in_array('Date', $this->toolTipOptions)) {        
              $dates = $meta->getDates();
              $time_str = $dates['TimeStr'];  
+            }
+            else $time_str = "";
                                       //remove sometimes duplicate camera name
+            if($camera) {                      
              $camera = preg_replace("/\b(\w+)(?:\s+\\1\b)/i", "$1", $camera);
              $speed =  $meta->_info['exif']['ExposureTime']['val'];//getShutterSpeed();
 			 $fstop =  $meta->_info['exif']['FNumber']['val'];
              if($fstop) {
 			     $camera .= "&nbsp;&nbsp;F:$fstop @ $speed sec.";             
              }
+            }
+            if($time_str) {
              $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str"; 
+            }            
            
               $artist = $this->getFieldValue('Artist',$meta);
              $_title = $meta->getTitle();  //msg($_title);           
