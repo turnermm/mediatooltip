@@ -10,7 +10,6 @@
           var imgsize =  jQuery( this ).parent().attr('data-size');    
           var fileSize = jQuery( this ).parent().attr('data-fsize');         
           
-      console.log(fileSize);
           if(camera) {              
               var title = jQuery( this ).parent().attr('title');        
                              
@@ -49,8 +48,8 @@
               jQuery( this ).tooltip({
                      content: output 
              });      
-                
-            // jQuery( this ).tooltip();
+      }       
+       else jQuery( this ).tooltip();
    });
     
     jQuery("a.mediafile" ).each (function( index ) {        
