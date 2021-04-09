@@ -12,7 +12,7 @@ $lang['time_format'] = 'If a time is appended to the date, then this option sets
 $lang['fields'] = 'Select from here the fields which should be included in the tooltips: <ol> <li> <b>Camera:</b> make and type;'
   . '<li> <b>File</b> in which the image is stored on the server <li>the <b>Exposure</b> data, if <code>Camera</code> is '
   . 'selected <li>the <b>Date </b> that the image or photo was created <li>the name of the <b>Artist</b> or potographer who made the '
-  . 'image/photo <li> <b>Caption</b>, ' .
+  . 'image/photo <li> <b>Caption</b>, ' . '<li><b>Copyright</b> info when available ' .
   'if available; <li>the <b>Size</b> of the image in pixels and size of the file on the server.</ol>'; 
 
                                                              
