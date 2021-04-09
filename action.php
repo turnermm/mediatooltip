@@ -176,7 +176,9 @@ function _insert_exif(Doku_Event $event) {
             if(in_array('ImgSize', $this->toolTipOptions)) { 
                 $w = $this->getFieldValue('Width',$meta);
                 $h = $this->getFieldValue('Height',$meta);
+                if(!empty($w) && !empty($h)) {
                 $matches[0] .= '" data-size ="' . $this->format_attribute("$w X $h pixels"); 
+            }
             }
             
             if(in_array('FileSize', $this->toolTipOptions)) { 

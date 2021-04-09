@@ -32,6 +32,8 @@
                         }
               }
           }
+          
+          if(imgsize && fileSize) {
           title += "<br />Image: " +imgsize + " File: "  + fileSize; // +' bytes';  
               if(camera && camera != 'noopener')  {
                   var patt = new RegExp("^&nbsp;&nbsp;");                  
