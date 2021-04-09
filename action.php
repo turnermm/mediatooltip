@@ -219,6 +219,7 @@ function _insert_exif(Doku_Event $event) {
              
              $matches[0] .= '"  data-rel ="' .  $this->format_attribute($camera);        
              $copy = $meta->_info['exif']['Copyright']; 
+             if(empty($copy)) $copy = $this->getFieldValue('Copyright',$meta);               
              if(!empty($copy)) {
                  $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }

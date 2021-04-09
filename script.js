@@ -41,6 +41,7 @@
                   }
                   else title += '<br />' + camera; 
               }  
+          }
            
               output =  caption ? title + '<br />' + caption: title;
               output =  copy ? output + '<br />' + copy : output;
@@ -48,8 +49,8 @@
               jQuery( this ).tooltip({
                      content: output 
              });      
-      }       
-       else jQuery( this ).tooltip();
+            
+      
    });
     
     jQuery("a.mediafile" ).each (function( index ) {        
