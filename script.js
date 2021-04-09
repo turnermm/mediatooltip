@@ -7,10 +7,13 @@
           var camera = jQuery( this ).parent().attr('data-rel');      
           var copy = jQuery( this ).parent().attr('license');           
           var caption = jQuery( this ).parent().attr('data-caption');            
+          var imgsize =  jQuery( this ).parent().attr('data-size');    
+          var fileSize = jQuery( this ).parent().attr('data-fsize');         
           
-      
+      console.log(fileSize);
           if(camera) {              
               var title = jQuery( this ).parent().attr('title');        
+                             
               var tarray  = title.match(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/);
               var ar = camera.split(/tm=/);            
               camera = camera.replace(/tm=.*?$/,"");
@@ -29,6 +32,7 @@
                         }
               }
           }
+          title += "<br />Image: " +imgsize + " File: "  + fileSize; // +' bytes';  
               if(camera && camera != 'noopener')  {
                   var patt = new RegExp("^&nbsp;&nbsp;");                  
                   if(patt.test(camera)) {  // no camera type found
@@ -36,20 +40,20 @@
                   }
                   else title += '<br />' + camera; 
               }  
-            //  console.log(output);
+           
               output =  caption ? title + '<br />' + caption: title;
               output =  copy ? output + '<br />' + copy : output;
-             // console.log(output);
+             
               jQuery( this ).tooltip({
-                      
                      content: output 
              });      
                 
-         //jQuery( this ).tooltip();
+            // jQuery( this ).tooltip();
    });
     
     jQuery("a.mediafile" ).each (function( index ) {        
        var title  = jQuery( this ).attr('title');      
+             
       if(title.match(/google/)) return;   
                        jQuery( this ).tooltip({
                          content: title

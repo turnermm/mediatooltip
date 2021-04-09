@@ -172,8 +172,19 @@ function _insert_exif(Doku_Event $event) {
              $time_str = $dates['TimeStr'];  
             }
             else $time_str = "";
+            
+            if(in_array('ImgSize', $this->toolTipOptions)) { 
+                $w = $this->getFieldValue('Width',$meta);
+                $h = $this->getFieldValue('Height',$meta);
+                $matches[0] .= '" data-size ="' . $this->format_attribute("$w X $h pixels"); 
+            }
+            
+            if(in_array('FileSize', $this->toolTipOptions)) { 
+                $matches[0] .= ', " data-fsize ="' . $this->format_attribute($this->getFieldValue('FileSize',$meta)); 
+            }            
+                               
+            if($camera) {          
                                       //remove sometimes duplicate camera name
-            if($camera) {                      
              $camera = preg_replace("/\b(\w+)(?:\s+\\1\b)/i", "$1", $camera);
              $speed =  $meta->_info['exif']['ExposureTime']['val'];//getShutterSpeed();
 			 $fstop =  $meta->_info['exif']['FNumber']['val'];
@@ -185,7 +196,9 @@ function _insert_exif(Doku_Event $event) {
              $camera .= "&nbsp;&nbsp;&nbsp;tm=$time_str"; 
             }            
            
+            if(in_array('Artist', $this->toolTipOptions)) {  
               $artist = $this->getFieldValue('Artist',$meta);
+            }    
              $_title = $meta->getTitle();  //msg($_title);           
              if(!empty($artist) && !empty($_title)) {             
                  $matches[0] .=  "&nbsp;$BR" . trim($artist);
@@ -208,7 +221,7 @@ function _insert_exif(Doku_Event $event) {
                  $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }
              $matches[0] = preg_replace("/data-/","\n    data-",$matches[0]);            
-           //  msg($matches[0],1);
+           
              return $matches [0];
         },
         $event->data
