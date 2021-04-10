@@ -13,8 +13,8 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
 
    function __construct() {
       $this->init_fields();
-      $this->toolTipOptions = explode(',',$this->getConf('fields'));
-      //if(!empty($this->$toolTipOptions)) $this->$toolTipOptions = explode($this->$toolTipOptions);
+      $this->toolTipOptions = $this->getConf('fields');
+      if(!empty($this->toolTipOptions)) $this->toolTipOptions = explode($this->toolTipOptions);     
    }
 
  /*
@@ -142,14 +142,13 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
  } 
  
 function _insert_exif(Doku_Event $event) { 
-  if(!strlen($this->toolTipOptions[0]))  {    
+   if(empty($this->toolTipOptions)) { 
        return;
   }
   
     $event->data = preg_replace_callback(
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
-             
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
              $_img = trim($_img,'"');
 
@@ -163,6 +162,7 @@ function _insert_exif(Doku_Event $event) {
                  $BR = "";
               } 
             else $BR = '<br>';
+            
             if(in_array('Camera', $this->toolTipOptions)) {   
              $camera = $meta->getCamera();       
              $camera = trim($camera);
