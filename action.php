@@ -142,19 +142,21 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
  } 
  
 function _insert_exif(Doku_Event $event) { 
-
-    if(empty($this->toolTipOptions)) return;
+  if(!strlen($this->toolTipOptions[0]))  {    
+       return;
+  }
   
     $event->data = preg_replace_callback(
          "/title=\"([^\"]+\.(jpg|jpeg|tiff))/i",
         function ($matches) {
-           //msg($matches[0]);
              
              list($_pre,$_img) = explode('=',$matches[0]); // $matchs[0] has complete path to image
+             $_img = trim($_img,'"');
 
              $meta = new JpegMeta(mediaFN($_img));    
                         /* if filename is omitted, then an artist and/or title is required */
               $useFileName = in_array('File',$this->toolTipOptions);
+              
               if(!$useFileName && $this->getFieldValue('Artist',$meta)) 
                {
                  $matches[0] = 'title="';
@@ -201,7 +203,11 @@ function _insert_exif(Doku_Event $event) {
             if(in_array('Artist', $this->toolTipOptions)) {  
               $artist = $this->getFieldValue('Artist',$meta);
             }    
-             $_title = $meta->getTitle();  //msg($_title);           
+            if($_img)  {
+                $_title = $_img;
+            }
+            else $_title = $meta->getTitle();  
+            
              if(!empty($artist) && !empty($_title)) {             
                  $matches[0] .=  "&nbsp;$BR" . trim($artist);
                  if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
@@ -212,14 +218,19 @@ function _insert_exif(Doku_Event $event) {
              elseif(!$useFileName && !empty($_title)) {
                  $matches[0] .=  $_title;
              }
+            if(in_array('Caption', $this->toolTipOptions)) {              
              $caption =  $this->getFieldValue('Caption',$meta);
              if(!empty($caption) && $caption != $_title) {                
                  $matches[0] .= '" data-caption ="' . $this->format_attribute($caption);       
              }
+            }
              
              $matches[0] .= '"  data-rel ="' .  $this->format_attribute($camera);        
+           
+           if(in_array('Copy', $this->toolTipOptions)) {               
              $copy = $meta->_info['exif']['Copyright']; 
              if(empty($copy)) $copy = $this->getFieldValue('Copyright',$meta);               
+           }             
              if(!empty($copy)) {
                  $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }
