@@ -12,9 +12,8 @@
         if(copy) {
            // jQuery( this ).parent().append('<p class="mtip_copy">' + copy + '</p>');
         }
+          var title = jQuery( this ).parent().attr('title');  
           if(camera) {              
-              var title = jQuery( this ).parent().attr('title');        
-                             
               var tarray  = title.match(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/);
               var ar = camera.split(/tm=/);            
               camera = camera.replace(/tm=.*?$/,"");
