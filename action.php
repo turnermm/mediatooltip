@@ -14,7 +14,7 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
    function __construct() {
       $this->init_fields();
       $this->toolTipOptions = $this->getConf('fields');
-      if(!empty($this->toolTipOptions)) $this->toolTipOptions = explode($this->toolTipOptions);     
+      if(!empty($this->toolTipOptions)) $this->toolTipOptions = explode(',',$this->toolTipOptions);  
    }
 
  /*
@@ -227,10 +227,11 @@ function _insert_exif(Doku_Event $event) {
              
              $matches[0] .= '"  data-rel ="' .  $this->format_attribute($camera);        
            
-           if(in_array('Copy', $this->toolTipOptions)) {               
+           if(in_array('Copyright', $this->toolTipOptions)) {               
              $copy = $meta->_info['exif']['Copyright']; 
              if(empty($copy)) $copy = $this->getFieldValue('Copyright',$meta);               
            }             
+         
              if(!empty($copy)) {
                  $matches[0] .= '" license="' . $this->format_attribute($copy); 
              }

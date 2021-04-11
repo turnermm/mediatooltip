@@ -9,7 +9,9 @@
           var caption = jQuery( this ).parent().attr('data-caption');            
           var imgsize =  jQuery( this ).parent().attr('data-size');    
           var fileSize = jQuery( this ).parent().attr('data-fsize');         
-          
+        if(copy) {
+           // jQuery( this ).parent().append('<p class="mtip_copy">' + copy + '</p>');
+        }
           if(camera) {              
               var title = jQuery( this ).parent().attr('title');        
                              
@@ -34,6 +36,7 @@
           
           if(imgsize && fileSize) {
           title += "<br />Image: " +imgsize + " File: "  + fileSize; // +' bytes';  
+          }
               if(camera && camera != 'noopener')  {
                   var patt = new RegExp("^&nbsp;&nbsp;");                  
                   if(patt.test(camera)) {  // no camera type found
@@ -41,10 +44,10 @@
                   }
                   else title += '<br />' + camera; 
               }  
-          }
            
-              output =  caption ? title + '<br />' + caption: title;
-              output =  copy ? output + '<br />' + copy : output;
+         
+         output =  caption ? (title + '<br />' + caption): title;
+         output =  copy ? (output + '<br />' + copy ): output;
              
               jQuery( this ).tooltip({
                      content: output 
