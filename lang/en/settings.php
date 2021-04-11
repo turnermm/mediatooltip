@@ -14,5 +14,7 @@ $lang['fields'] = 'Select from here the fields which should be included in the t
   . 'selected <li>the <b>Date </b> that the image or photo was created <li>the name of the <b>Artist</b> or potographer who made the '
   . 'image/photo <li> <b>Caption</b>, ' . '<li><b>Copyright</b> info when available ' .
   'if available; <li>the <b>Size</b> of the image in pixels and size of the file on the server.</ol>'; 
+$lang['copypos'] = 'Choose where to place the copyright statment: <ol><li>in the <code>tooltip</code></li>'.
+'<li><code>on-screen</code> underneath the image</li> <li><code>both</code> in the tooltip and under the image</li>'; 
 
                                                              

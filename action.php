@@ -182,7 +182,7 @@ function _insert_exif(Doku_Event $event) {
             }
             
             if(in_array('FileSize', $this->toolTipOptions)) { 
-                $matches[0] .= ', " data-fsize ="' . $this->format_attribute($this->getFieldValue('FileSize',$meta)); 
+                $matches[0] .= ', " data-fsize ="' . $this->format_attribute($this->getFieldValue('FileSize',$meta)) . '<br />';                
             }            
                                
             if($camera) {          
