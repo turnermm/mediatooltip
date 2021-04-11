@@ -9,8 +9,14 @@
           var caption = jQuery( this ).parent().attr('data-caption');            
           var imgsize =  jQuery( this ).parent().attr('data-size');    
           var fileSize = jQuery( this ).parent().attr('data-fsize');         
+        var copypos;
         if(copy) {
-           // jQuery( this ).parent().append('<p class="mtip_copy">' + copy + '</p>');
+            var ar = copy.split('::');
+            copy = ar[1];
+            copypos = ar[0]; 
+            if(copypos.match(/on-screen|both/)) {             
+              jQuery( this ).parent().append('<p class="mtip_copy">' + copy + '</p>');
+            }
         }
           var title = jQuery( this ).parent().attr('title');  
           if(camera) {              
@@ -44,7 +50,9 @@
                   else title += '<br />' + camera; 
               }  
            
-         
+        if(copy && !copypos.match(/tooltip|both/)) {             
+            copy = "";   
+        }        
          output =  caption ? (title + '<br />' + caption): title;
          output =  copy ? (output + '<br />' + copy ): output;
              

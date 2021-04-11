@@ -13,3 +13,7 @@ div.ui-tooltip {
     max-width: 600px !important;
     font-size: 10pt !important;
 }
+
+p.mtip_copy {
+   font-size:x-small;  
+}

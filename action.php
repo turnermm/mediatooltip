@@ -86,9 +86,7 @@ class action_plugin_mediatooltip extends DokuWiki_Action_Plugin {
          }
          
          if(!empty($user_grps)) {
-            // $this->write_debug($user_grps);     
              foreach($user_grps as $grp) {
-             //  $this->write_debug($grp);
                if(strpos($photogroups,$grp) !== false) {
                    return $grp;
                }
@@ -233,10 +231,11 @@ function _insert_exif(Doku_Event $event) {
            }             
          
              if(!empty($copy)) {
-                 $matches[0] .= '" license="' . $this->format_attribute($copy); 
+                 $copypos = $this->getConf('copypos');  
+                 $matches[0] .= '" license="' .  "$copypos::" .$this->format_attribute($copy); 
              }
              $matches[0] = preg_replace("/data-/","\n    data-",$matches[0]);            
-           
+          // msg(htmlentities($matches[0]),2);
              return $matches [0];
         },
         $event->data
