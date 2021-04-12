@@ -12,12 +12,12 @@
         var width = jQuery( this ).attr('width');        
         var copypos;
         if(copy) {
-            var ar = copy.split('::');
+            var ar = copy.split('::')
             copy = ar[1];
             copypos = ar[0]; 
             if(copypos.match(/on-screen|both/)) {             
               jQuery( this ).parent().append('<p class="mtip_copy">' + copy + '</p>');
-              if(width) jQuery(this).next().first().css("width", width+8); 
+                if(width) jQuery("p.mtip_copy").css("max-width", parseInt(width) +8);
             }
         }
           var title = jQuery( this ).parent().attr('title');  
