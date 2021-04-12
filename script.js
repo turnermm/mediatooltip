@@ -9,6 +9,7 @@
           var caption = jQuery( this ).parent().attr('data-caption');            
           var imgsize =  jQuery( this ).parent().attr('data-size');    
           var fileSize = jQuery( this ).parent().attr('data-fsize');         
+        var width = jQuery( this ).attr('width');        
         var copypos;
         if(copy) {
             var ar = copy.split('::');
@@ -16,6 +17,7 @@
             copypos = ar[0]; 
             if(copypos.match(/on-screen|both/)) {             
               jQuery( this ).parent().append('<p class="mtip_copy">' + copy + '</p>');
+              if(width) jQuery(this).next().first().css("width", width+8); 
             }
         }
           var title = jQuery( this ).parent().attr('title');  
