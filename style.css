@@ -16,4 +16,5 @@ div.ui-tooltip {
 
 p.mtip_copy {
    font-size:x-small;  
+   overflow-wrap: break-word;
 }
