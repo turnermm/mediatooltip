@@ -182,7 +182,7 @@ function _insert_exif(Doku_Event $event) {
             }
             
             if(in_array('FileSize', $this->toolTipOptions)) { 
-                $matches[0] .= ', " data-fsize ="' . $this->format_attribute($this->getFieldValue('FileSize',$meta)) . '<br />';                
+                $matches[0] .= ', " data-fsize ="' . $this->format_attribute($this->getFieldValue('FileSize',$meta));             
             }            
                                
             if($camera) {          
@@ -214,7 +214,7 @@ function _insert_exif(Doku_Event $event) {
                  $matches[0] .=  $artist;
              }
              elseif(!$useFileName && !empty($_title)) {
-                 $matches[0] .=  $_title;
+                 $matches[0] .=  trim($_title);
              }
             if(in_array('Caption', $this->toolTipOptions)) {              
              $caption =  $this->getFieldValue('Caption',$meta);
@@ -222,8 +222,9 @@ function _insert_exif(Doku_Event $event) {
                  $matches[0] .= '" data-caption ="' . $this->format_attribute($caption);       
              }
             }
-             
+           if($camera) { 
              $matches[0] .= '"  data-rel ="' .  $this->format_attribute($camera);        
+           }           
            
            if(in_array('Copyright', $this->toolTipOptions)) {               
              $copy = $meta->_info['exif']['Copyright']; 
@@ -231,7 +232,7 @@ function _insert_exif(Doku_Event $event) {
            }             
          
              if(!empty($copy)) {
-                 $copypos = $this->getConf('copypos');  
+                 $copypos = trim($this->getConf('copypos'));  
                  $matches[0] .= '" license="' .  "$copypos::" .$this->format_attribute($copy); 
              }
              $matches[0] = preg_replace("/data-/","\n    data-",$matches[0]);            

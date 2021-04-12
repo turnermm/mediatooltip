@@ -41,7 +41,6 @@
           
           if(imgsize && fileSize) {
           title += "<br />Image: " +imgsize + " File: "  + fileSize;  
-
           }
               if(camera && camera != 'noopener')  {
                   var patt = new RegExp("^&nbsp;&nbsp;");                  
