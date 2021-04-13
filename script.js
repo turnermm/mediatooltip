@@ -42,7 +42,7 @@
           }
           
           if(imgsize && fileSize) {
-          title += "<br />Image: " +imgsize + " File: "  + fileSize;  
+              title += "<br />" + LANG.plugins.mediatooltip.img + imgsize + " " + LANG.plugins.mediatooltip.file + fileSize;       
           }
               if(camera && camera != 'noopener')  {
                   var patt = new RegExp("^&nbsp;&nbsp;");                  

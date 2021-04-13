@@ -207,11 +207,12 @@ function _insert_exif(Doku_Event $event) {
             else $_title = $meta->getTitle();  
             
              if(!empty($artist) && !empty($_title)) {             
-                 $matches[0] .=  "&nbsp;$BR" . trim($artist);
-                 if(!empty($_title))$matches[0] .= ",&nbsp;" . $_title;
+                 $matches[0] .=  "&nbsp;$BR" . 'Artist: ' . trim($artist);                
+                 if(!empty($_title) && strpos($matches[0],$_title) === false)
+                      $matches[0] .= ",&nbsp;" . $_title;
              }
              else if(!empty($artist)) {
-                 $matches[0] .=  $artist;
+                $matches[0] .=  $this->getLang('creator') . $artist;
              }
              elseif(!$useFileName && !empty($_title)) {
                  $matches[0] .=  trim($_title);
