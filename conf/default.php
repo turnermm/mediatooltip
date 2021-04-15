@@ -6,3 +6,4 @@ $conf['date_style'] = "date_hms";
 $conf['time_format'] = 'hour.min.sec';
 $conf['fields'] = 'File,Copyright';
 $conf['copypos'] = 'tooltip';
+$conf['captionpos'] = 'on-screen';

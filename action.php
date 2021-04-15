@@ -217,10 +217,12 @@ function _insert_exif(Doku_Event $event) {
              elseif(!$useFileName && !empty($_title)) {
                  $matches[0] .=  trim($_title);
              }
+             
+            $captionpos = $this->getConf('captionpos'); 
             if(in_array('Caption', $this->toolTipOptions)) {              
              $caption =  $this->getFieldValue('Caption',$meta);
              if(!empty($caption) && $caption != $_title) {                
-                 $matches[0] .= '" data-caption ="' . $this->format_attribute($caption);       
+                 $matches[0] .= '" data-caption ="' .  "$captionpos::" . $this->format_attribute($caption);       
              }
             }
            if($camera) { 
@@ -234,6 +236,9 @@ function _insert_exif(Doku_Event $event) {
          
              if(!empty($copy)) {
                  $copypos = trim($this->getConf('copypos'));  
+                 if($captionpos == 'screen') {
+                     $copypos = 'tooltip';
+                 }
                  $matches[0] .= '" license="' .  "$copypos::" .$this->format_attribute($copy); 
              }
              $matches[0] = preg_replace("/data-/","\n    data-",$matches[0]);            

@@ -1,6 +1,7 @@
         
     
     jQuery( document ).ready(function() {            
+
     jQuery("img.media,img.mediacenter,img.mediaright" ).each (function( index ) {   
           var date, output="",title = "";    
           var url  = jQuery( this ).parent().attr('href');      
@@ -10,16 +11,26 @@
           var imgsize =  jQuery( this ).parent().attr('data-size');    
           var fileSize = jQuery( this ).parent().attr('data-fsize');         
         var width = jQuery( this ).attr('width');        
-        var copypos;
+        var copypos, captionpos;
+        if(caption) {       
+            var ar = place_caption(caption.split('::'), this);
+            caption = ""; ;
+            captionpos = ar[0];       
+        }      
         if(copy) {
-            var ar = copy.split('::')
+          if(captionpos == 'on-screen') {
+              copypos = 'tooltip';  
+              copy = copy.replace(/^::/,"");
+          } 
+          else {
+              var ar = place_caption(copy.split('::'), this);
             copy = ar[1];
             copypos = ar[0]; 
-            if(copypos.match(/on-screen|both/)) {             
-              jQuery( this ).parent().append('<p class="mtip_copy">' + copy + '</p>');
-                if(width) jQuery("p.mtip_copy").css("max-width", parseInt(width) +8);
             }
+         
+        
         }
+
           var title = jQuery( this ).parent().attr('title');  
           if(camera) {              
               var tarray  = title.match(/_(\d\d[.\-_]\d\d([.\-_]\d\d)?)_/);
@@ -55,6 +66,9 @@
         if(copy && !copypos.match(/tooltip|both/)) {             
             copy = "";   
         }        
+        if(caption && !captionpos.match(/tooltip/)) {             
+            caption = "";   
+        }         
          output =  caption ? (title + '<br />' + caption): title;
          output =  copy ? (output + '<br />' + copy ): output;
              
@@ -75,6 +89,20 @@
     }); 
 });
     
+function place_caption(ar, obj) {
+    var width = jQuery( obj ).attr('width');
+    text = ar[1];
+    pos = ar[0]; 
+
+    if(pos.match(/on-screen|both/)) {  
+    console.log(text);
+    console.log(pos);    
+        jQuery( obj ).parent().append('<p class="mtip_copy">' + text + '</p>');
+            if(width) jQuery("p.mtip_copy").css("max-width", parseInt(width) +8);
+       } 
  	
+    return ar;       
+           
+} 	
 
 
