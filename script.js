@@ -95,8 +95,6 @@ function place_caption(ar, obj) {
     pos = ar[0]; 
 
     if(pos.match(/on-screen|both/)) {  
-    console.log(text);
-    console.log(pos);    
         jQuery( obj ).parent().append('<p class="mtip_copy">' + text + '</p>');
             if(width) jQuery("p.mtip_copy").css("max-width", parseInt(width) +8);
        } 
