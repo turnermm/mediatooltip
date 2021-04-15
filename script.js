@@ -20,7 +20,7 @@
         if(copy) {
           if(captionpos == 'on-screen') {
               copypos = 'tooltip';  
-              copy = copy.replace(/^::/,"");
+              copy = copy.replace(/^.+::/,"");
           } 
           else {
               var ar = place_caption(copy.split('::'), this);

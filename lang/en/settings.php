@@ -16,5 +16,7 @@ $lang['fields'] = 'Select from here the fields which should be included in the t
   'if available; <li>the <b>Size</b> of the image in pixels and size of the file on the server.</ol>'; 
 $lang['copypos'] = 'Choose where to place the copyright statment: <ol><li>in the <code>tooltip</code></li>'.
 '<li><code>on-screen</code> underneath the image</li> <li><code>both</code> in the tooltip and under the image</li>'; 
-
+$lang['captionpos'] = 'This option sets the placement of the caption, either in the tooltip or beneath the image in the ' .
+  'traditional position of the caption, i.e. <code>on-screen</code>.  If both copyright and caption are set to <code>on-screen</code> ' .
+  ' the caption setting takes precedence and the caption statement will be included in the tooltip.';
                                                              
